@@ -1,8 +1,8 @@
-from apispec_helper.basic_type import CommonType
-from apispec_helper.basic_type import ExternalDocumentation
+from apispec_helper.basic_type.common_type import CommonType
+from apispec_helper.basic_type.external_documentation import ExternalDocumentation
 from dataclasses import dataclass
 from apispec_helper._internal_utils.dataclass_helper_base import DataclassHelperBase
-from apispec_helper.basic_type import ExamplesType
+from apispec_helper.basic_type.examples import ExamplesType
 
 
 @dataclass

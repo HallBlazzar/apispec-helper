@@ -1,11 +1,11 @@
 from dataclasses import dataclass
 from apispec_helper._internal_utils.dataclass_helper_base import DataclassHelperBase
 from typing import List
-from apispec_helper.basic_type import ExternalDocumentation
+from apispec_helper.basic_type.external_documentation import ExternalDocumentation
 from apispec_helper.component.parameter import ParameterType
 from apispec_helper.component.request_body import RequestBody
 from apispec_helper.component.response import Response
-from apispec_helper.basic_type import Server
+from apispec_helper.basic_type.server import Server
 
 from apispec_helper._internal_utils.one_of_field_checker import OneOfFieldChecker
 from apispec_helper._internal_utils.post_init_base import PostInitBase
