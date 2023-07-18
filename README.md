@@ -2,7 +2,7 @@
 
 This project provides objective oriented helper classes collection for defining OpenAPI objects in [apispec](https://pypi.org/project/apispec/).
 
-> **_NOTE:_** OpenAPI Objects version supported by this project is [3.0.3](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.0.3.md).
+> **_NOTE:_** OpenAPI Specification version supported by this project is [3.0.3](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.0.3.md).
 
 ## Overview
 
@@ -74,9 +74,9 @@ spec.components.schema(
     }
 )
 ```
-If most APIs' response in our application are paginated(e.g., automatically wrapped by backend middleware like [Django REST framework](https://www.django-rest-framework.org/)), then the pagination metadata field, `result_count` / `next_page_url` / `previous_page_url`, will appear everywhere in source code. Though we can prevent the issue by create functions or class to help us prevent this kind of duplicated work, we still need to maintain these utilities by ourselves.
+However, in real world, everything won't be that simple. For instance, if most APIs' response in our application are paginated(e.g., automatically wrapped by backend middleware like [Django REST framework](https://www.django-rest-framework.org/)), then the pagination metadata field, `result_count` / `next_page_url` / `previous_page_url`, will appear everywhere in source code. Though we can prevent the issue by create functions or class for help, we still need to maintain these utilities by ourselves.
 
-Another disadvantage of the Dictionary approach is we need to lookup fields' definition for different OpenAPI Objects. As [OpenAPI Specification](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.0.3.md#parameter-object) shows, there are hundreds of fields among all OpenAPI Objects. We need to construct Python dictionaries carefully to prevent us from providing wrong values. It is not a trivial work especially if there are hundreds of API Objects or deeply nested OpenAPI Objects defined in our specification. We need a better approach can help us manage field types and provide hints/auto-completion when writing specification.
+Another disadvantage of the Dictionary approach is we need to lookup fields' definition for OpenAPI Objects. As [OpenAPI Specification](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.0.3.md#parameter-object) shows, there are hundreds of fields among different OpenAPI Objects. We need to construct Python dictionaries carefully to prevent us from providing wrong values. It is not a trivial work especially if there are hundreds of OpenAPI Objects or deeply nested OpenAPI Objects defined in our specification. We need a better approach can help us manage field types and provide hints/auto-completion when writing specification.
 
 To address these disadvantage of using Dictionary to represent OpenAPI Objects, **apispec-helper** implements OpenAPI Objects definition with native Python Classes. We also provide helper Classes to simplify works when working with OpenAPI Objects and apispec. 
 
@@ -153,15 +153,15 @@ components:
       type: object
 ```
 
-You can use any Object-Oriented approaches supported by Python with **apispec-helper**. Also, fields are explicitly defined in each helper classes instead of using `**kwargs`, which means modern Python IDEs(e.g., [PyCharm](https://www.jetbrains.com/pycharm/) and [VSCode](https://code.visualstudio.com/)) can generate hints and auto-complete your codes.
+You can use any Object-Oriented approaches supported by Python with **apispec-helper**. Fields are explicitly defined in each helper classes instead of using `**kwargs`, which means modern Python IDEs(e.g., [PyCharm](https://www.jetbrains.com/pycharm/) and [VSCode](https://code.visualstudio.com/)) can generate hints and auto-complete your codes. Also, typing hints can help you pass correct Objects to fields(modern IDEs can check parameter types for you). 
 
 ![Auto-Complete](/docs/images/auto_complete.png)
 
 ## How to use
 
-### Basic
+### Basics
 
-**apispec-helper** already provides pre-defined OpenAPI Object for you. They're categorized as 3 submodules:
+**apispec-helper** already provides pre-defined OpenAPI Objects, which are categorized into 3 submodules:
 
 - basic_type
 - component
@@ -209,7 +209,7 @@ And basic schema typing helper classes
 | basic_type | OneOf   | For Schema Object `type: "oneOf`                                                                                              |
 | basic_type | OneOf   | For Schema Object `type: "oneOf`                                                                                              |
 
-Remember that what **apispec-helper** does is still creating dictionary for apispec core APIs, but not changing apispec's behavior. To convert these Python Class Objects to Dictionary, you can use `dataclass.asdict()` as these Classes are implemented through [Python Dataclass](https://docs.python.org/3/library/dataclasses.html). Thus, you can provide these Classes Objects as below:
+Remember that what **apispec-helper** does is still creating dictionary for apispec core APIs, but isn't changing apispec's behavior. To convert these Python Class Objects to Dictionary, you can use `dataclass.asdict()` as these Classes are implemented through [Python Dataclass](https://docs.python.org/3/library/dataclasses.html). Thus, you can provide these Classes Objects as parameters as below:
 
 ```python
 from apispec_helper.basic_type import Object, Integer, IntegerFormat, String
@@ -283,7 +283,7 @@ spec.component.schema(
 )
 ```
 
-To simplify API call, `ComponentBase` also provides a special property, `apispec_parameter`, to generate dictionary of parameter apispec core APIs requires:
+To simplify API call, `ComponentBase` also provides a special property, `apispec_parameter`, to generate dictionary of parameters which apispec core APIs require:
 
 ```python
 spec.component.schema(**Pet().apispec_parameter)
@@ -323,7 +323,7 @@ And it generates 5 properties for `APISpec.path` core API:
 - `description`
 - `parameters`
 
-> **_NOTE:_** For properties undefined in `PathItem`, `KeyError` will be thrown.
+> **_NOTE:_** Directly access properties undefined in `PathItem` will cause the `KeyError` exception.
 
 ```python
 # return "/pet"
@@ -387,13 +387,15 @@ format: "float"
 
 ### Keyword replacement
 
-Some keywords in OpenAPI Specification are conflict with Python keywords. For instance, `in` and `format`. These keywords are with underline(`_`) postfix to prevent conflicting(`in_` and `format_`). When converting these Objects to dictionary, underline in these keywords will be removed. We won't see them in dictionaries and yaml outputs.
+Some keywords in OpenAPI Specification conflict with Python keywords. For instance, `in` and `format`. These keywords are with underline(`_`) postfix to prevent conflict(`in_` and `format_`) in **apispec-helper**. When converting these Objects to dictionary, underline in these keywords will be removed. We won't see them in dictionaries and yaml outputs.
 
 ### Referencing
 
-The apispec can [generate reference statements](https://apispec.readthedocs.io/en/latest/special_topics.html#referencing-top-level-components), so for fields allow referencing, you can directly provide component names instead of adding `"$ref": "..."` by yourself. This also work in **apispec-helper**. Some Class fields allow `str` type value instead of OpenAPI Object type, which allows you to provide component name for apispec to resolve them. See the `PaginatedPetPet` example in the [Overview](#overview) section
+The apispec can [generate reference statements](https://apispec.readthedocs.io/en/latest/special_topics.html#referencing-top-level-components), so for fields allow referencing, you can directly provide component names instead of adding `"$ref": "..."` by yourself, which also works in **apispec-helper**. Some Class fields accept `str` type value instead of OpenAPI Object type, which means you can pass component name to apispec to generate references. See the `PaginatedPetPet` example in the [Overview](#overview) section.
 
 ## Todo
+
+PRs are welcomed to this project:
 
 1. Unitest to cover all OpenAPI Objects
 2. Support all fields and all OpenAPI Objects
