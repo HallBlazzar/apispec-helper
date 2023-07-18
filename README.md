@@ -159,6 +159,14 @@ You can use any Object-Oriented approaches supported by Python with **apispec-he
 
 ## How to use
 
+### Installation
+
+This project is released on PyPI([Project Page](https://pypi.org/project/apispec-helper/)). To install the latest version from PyPI
+
+```shell
+pip install -u apispec-helper
+```
+
 ### Basics
 
 **apispec-helper** already provides pre-defined OpenAPI Objects, which are categorized into 3 submodules:
