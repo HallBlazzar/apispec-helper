@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from apispec_helper._internal_utils.dataclass_helper_base import DataclassHelperBase
-from typing import List
+from typing import List, Mapping
 from apispec_helper.basic_type.external_documentation import ExternalDocumentation
 from apispec_helper.component.parameter import ParameterType
 from apispec_helper.component.request_body import RequestBody
@@ -58,4 +58,4 @@ class PathItem(DataclassHelperBase):
     summary: str = None
     description: str = None
     servers: List[Server] = None
-    parameters: List[ParameterType] = None
+    parameters: [str, ParameterType] = None
