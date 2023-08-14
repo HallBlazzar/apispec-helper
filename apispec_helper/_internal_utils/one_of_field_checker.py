@@ -13,7 +13,10 @@ class OneOfFieldChecker:
 
     def execute(self):
         for field in self.__one_of_fields:
-            if hasattr(self.__instance, field) is True:
+            # Field always exists(can be checked via __dir__), so we check value provided instead
+            filed_with_value = getattr(self.__instance, field) is not None
+
+            if filed_with_value is True:
                 return
 
         raise NoneOfOneOfFieldsProvidedError(self.__one_of_fields)

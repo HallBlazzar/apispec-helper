@@ -15,8 +15,10 @@ class MutualExclusiveFieldChecker:
         mutual_exclusive_check = None
 
         for field in self.__mutual_exclusive_fields:
-            field_provided = hasattr(self.__instance, field)
-            if (mutual_exclusive_check is None) or (mutual_exclusive_check and field_provided is False):
+            # if field provided, then value won't be None
+            # we cannot use hasattr() as DataclassHelperBase cannot remove attribute completely(can be seen in __dir__())
+            field_provided = getattr(self.__instance, field) is not None
+            if (mutual_exclusive_check is None) or ((mutual_exclusive_check and field_provided) is False):
                 mutual_exclusive_check = field_provided
             else:
-                raise MultipleMutualExclusiveFieldsProvidedError(self.__mutual_exclusive_fields) if mutual_exclusive_check is True else None
+                raise MultipleMutualExclusiveFieldsProvidedError(self.__mutual_exclusive_fields)
