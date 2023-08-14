@@ -15,7 +15,8 @@ class MutualExclusiveFieldChecker:
         mutual_exclusive_check = None
 
         for field in self.__mutual_exclusive_fields:
-            if mutual_exclusive_check is None:
-                mutual_exclusive_check = hasattr(self.__instance, field)
+            field_provided = hasattr(self.__instance, field)
+            if (mutual_exclusive_check is None) or (mutual_exclusive_check and field_provided is False):
+                mutual_exclusive_check = field_provided
             else:
                 raise MultipleMutualExclusiveFieldsProvidedError(self.__mutual_exclusive_fields) if mutual_exclusive_check is True else None
