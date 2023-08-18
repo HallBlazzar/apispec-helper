@@ -58,4 +58,4 @@ class PathItem(DataclassHelperBase):
     summary: str = None
     description: str = None
     servers: List[Server] = None
-    parameters: [str, ParameterType] = None
+    parameters: List[ParameterType] = None

@@ -217,11 +217,10 @@ And basic schema typing helper classes
 | basic_type | OneOf   | For Schema Object `type: "oneOf`                                                                                              |
 | basic_type | OneOf   | For Schema Object `type: "oneOf`                                                                                              |
 
-Remember that what **apispec-helper** does is still creating dictionary for apispec core APIs, but isn't changing apispec's behavior. To convert these Python Class Objects to Dictionary, you can use `dataclass.asdict()` as these Classes are implemented through [Python Dataclass](https://docs.python.org/3/library/dataclasses.html). Thus, you can provide these Classes Objects as parameters as below:
+Remember that what **apispec-helper** does is still creating dictionary for apispec core APIs, but isn't changing apispec's behavior. To convert these Python Class Objects to Dictionary, you can use `dict()` build-in method. Thus, you can provide these Classes Objects as parameters as below:
 
 ```python
 from apispec_helper.basic_type import Object, Integer, IntegerFormat, String
-from dataclasses import asdict
 from apispec import APISpec
 
 pet = Object(
@@ -238,13 +237,13 @@ spec = APISpec(
 )
 
 spec.components.schema(
-    "Pet", asdict(pet)
+    "Pet", dict(pet)
 )
 ```
 
 ### Base Class Helper
 
-It can be redundant to import and call `dataclasses.asdic()` repeatedly each time calling apispec core APIs. Also, it takes extra efforts on managing input parameters to apispec core APIs, as apispec doesn't directly accept OpenAPI Objects as input. Therefore, **apispec-helper** provides 2 Bases Classes, `ComponentBase` and `PathBase`, to simplify these works.
+It can be redundant to import and call `dic()` repeatedly each time calling apispec core APIs. Also, it takes extra efforts on managing input parameters to apispec core APIs, as apispec doesn't directly accept OpenAPI Objects as input. Therefore, **apispec-helper** provides 2 Bases Classes, `ComponentBase` and `PathBase`, to simplify these works.
 
 #### `ComponentBase`
 

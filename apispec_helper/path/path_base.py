@@ -1,4 +1,3 @@
-from dataclasses import asdict
 from apispec_helper.path.path_item import PathItem
 
 
@@ -9,23 +8,23 @@ class PathBase:
 
     @property
     def operations(self):
-        return asdict(self.__path_item_definition)['operations']
+        return dict(self.__path_item_definition)['operations']
 
     @property
     def summary(self):
-        return asdict(self.__path_item_definition)['summary']
+        return dict(self.__path_item_definition)['summary']
 
     @property
     def description(self):
-        return asdict(self.__path_item_definition)['description']
+        return dict(self.__path_item_definition)['description']
 
     @property
     def servers(self):
-        return asdict(self.__path_item_definition)['servers']
+        return dict(self.__path_item_definition)['servers']
 
     @property
     def parameters(self):
-        return asdict(self.__path_item_definition)['parameters']
+        return dict(self.__path_item_definition)['parameters']
 
     @property
     def path(self):

@@ -1,4 +1,3 @@
-from dataclasses import asdict
 from apispec_helper.basic_type import CommonType
 from apispec_helper.component.parameter import Parameter
 from apispec_helper.component.request_body import RequestBody
@@ -14,7 +13,7 @@ class ComponentBase:
 
     @property
     def component_definition(self):
-        return asdict(self.__component_definition)
+        return dict(self.__component_definition)
 
     @property
     def component_name(self):

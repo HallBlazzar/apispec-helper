@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "apispec-helper"
-version = "0.1.4"
+version = "0.2.0"
 description = "This project provides objective oriented helper classes collection for defining OpenAPI objects in [apispec](https://pypi.org/project/apispec/)."
 authors = ["hallblazzar <hallblazzar@gmail.com>"]
 license = "MIT"
@@ -17,7 +17,7 @@ classifiers = [
 python = "^3.7"
 
 [tool.poetry.group.dev.dependencies]
-apispec = "^6.3.0"
+apispec = {extras = ["yaml"], version = "^6.3.0"}
 
 [build-system]
 requires = ["poetry-core"]
