@@ -130,7 +130,7 @@ class Array(CommonTypeBase):
 
     # dict for {}, empty dict
     # str for reference
-    items: CommonTypeBase | dict | list | OneOf | str = None
+    items_: CommonTypeBase | dict | list | OneOf | str = None
 
     uniqueItems: bool = None
 

@@ -3,7 +3,7 @@ from dataclasses import fields, dataclass
 from apispec_helper.utils import to_dict
 
 
-keyword_fields = ["in_", "type_", "format_"]
+keyword_fields = ["in_", "type_", "format_", "items_"]
 
 @dataclass
 class DataclassHelperBase(PostInitBase, dict):
