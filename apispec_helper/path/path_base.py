@@ -8,23 +8,23 @@ class PathBase:
 
     @property
     def operations(self):
-        return dict(self.__path_item_definition)['operations']
+        return self.__path_item_definition.to_dict()['operations']
 
     @property
     def summary(self):
-        return dict(self.__path_item_definition)['summary']
+        return self.__path_item_definition.to_dict()['summary']
 
     @property
     def description(self):
-        return dict(self.__path_item_definition)['description']
+        return self.__path_item_definition.to_dict()['description']
 
     @property
     def servers(self):
-        return dict(self.__path_item_definition)['servers']
+        return self.__path_item_definition.to_dict()['servers']
 
     @property
     def parameters(self):
-        return dict(self.__path_item_definition)['parameters']
+        return self.__path_item_definition.to_dict()['parameters']
 
     @property
     def path(self):

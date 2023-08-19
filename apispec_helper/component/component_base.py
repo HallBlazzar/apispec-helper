@@ -13,7 +13,7 @@ class ComponentBase:
 
     @property
     def component_definition(self):
-        return dict(self.__component_definition)
+        return self.__component_definition.to_dict()
 
     @property
     def component_name(self):

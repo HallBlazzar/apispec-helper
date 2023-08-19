@@ -1,5 +1,6 @@
 from apispec_helper._internal_utils.post_init_base import PostInitBase
 from dataclasses import fields, dataclass
+from apispec_helper.utils import to_dict
 
 
 keyword_fields = ["in_", "type_", "format_"]
@@ -27,3 +28,6 @@ class DataclassHelperBase(PostInitBase, dict):
     @staticmethod
     def __rename_keyword_fields(field_name):
         return field_name.rstrip("_") if field_name in keyword_fields else field_name
+
+    def to_dict(self):
+        return to_dict(self)

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "apispec-helper"
-version = "0.2.1"
+version = "0.2.2"
 description = "This project provides objective oriented helper classes collection for defining OpenAPI objects in [apispec](https://pypi.org/project/apispec/)."
 authors = ["hallblazzar <hallblazzar@gmail.com>"]
 license = "MIT"
