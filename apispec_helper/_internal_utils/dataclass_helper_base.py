@@ -10,7 +10,6 @@ class DataclassHelperBase(PostInitBase, dict):
         super().__post_init__()
 
         argument_dict = self.__create_argument_dict()
-        print(argument_dict)
         dict.__init__(self, **argument_dict)
 
     def __create_argument_dict(self):
@@ -20,8 +19,6 @@ class DataclassHelperBase(PostInitBase, dict):
 
         for single_field in dataclass_fields:
             field_value = getattr(self, single_field.name)
-            # print(single_field.name)
-            # print(field_value)
             if field_value is not None:
                 argument_dict[self.__rename_keyword_fields(single_field.name)] = getattr(self, single_field.name)
 
