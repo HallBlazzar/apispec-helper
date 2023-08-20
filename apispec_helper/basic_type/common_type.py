@@ -1,7 +1,7 @@
 from dataclasses import dataclass, field
 from apispec_helper._internal_utils.dataclass_helper_base import DataclassHelperBase
 from apispec_helper.basic_type.examples import ExamplesType
-from typing import List, Dict
+from typing import List, Dict, Any
 from typing import Union
 
 
@@ -14,7 +14,7 @@ class CommonTypeBase(DataclassHelperBase):
     writeOnly: bool = None
     enum: List = None
 
-    example: dict = None
+    example: Any = None
     examples: ExamplesType = None
 
 
